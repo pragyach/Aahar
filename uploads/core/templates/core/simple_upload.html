@@ -3,15 +3,49 @@
 {% load static %}
 
 {% block content %}
+<div id="topbar" style="height:150px;width:700vw ">
+  <a href="{% url 'home' %}"><img src = "/static/ahar logo.png" height = 100%></a>
+</div>
+<div style="background-color:#00a550;height:20px;margin-top:0px ">
+    <p style="color: white;padding-left: 10px">Stop to save on your food outlay</p>
+</div>
+<div style="margin-top:25px "> 
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <input type="file" name="myfile">
+    <p>Enter csv file of your transactions<span style="color: red">*</span></p>
+    <input type="file" name="myfile" required>
+    <p>Enter food ordering date<span style="color: red">*</span></p>
+    <input type="date" id="odate" name="Order date" required>
     <button type="submit">Upload</button>
   </form>
-
+  
   {% if uploaded_file_url %}
-    <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
-  {% endif %}
+    <br>
+    {%comment%}<p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>{%endcomment%}
+    <hr>
+    <p><b>Expected Order on {{test_date}}</b> </p> 
+    <hr>
+    <p> 
+      {% for i,d in Expected_order_day%}
+        <SPAN>{{d}}</SPAN>
+        {% for qua in i %}
+          <p>Item_id:{{forloop.counter}} --> {{qua}}</p>
+        {% endfor %}
+        <hr>
+      {% endfor %}
+    </p>
+  {% else %}
+    <div style="height :400px"> </div>
+    
 
-  <p><a href="{% url 'home' %}">Return to home</a></p>
+  {% endif %}
+</div>
+<div>
+  <p><a href="{% url 'home' %}"><button style="border-radius:4px;font-size:20px;border-color:#00a550;color: #00a550">Return to home</button></a></p>
+
+  </div>
+  <div style="background-color:#00a550;height:20px;margin-top:0px;margin-bottom:0px;display: flex;justify-content: center;  ">
+    <span><p style="color: white;padding-left: 10px;margin: 0px">&copy;Ultra Noobs</p></span>
+</div>
+
 {% endblock %}
